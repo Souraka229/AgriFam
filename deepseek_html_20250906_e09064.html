@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriFarm - Connecter Agriculteurs et Acheteurs au Bénin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #7cb342;
+            --accent-color: #ff9800;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #f57c00;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1625246333193-4c8f5e0a90ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .how-it-works {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 1rem;
+        }
+        
+        .how-it-works .section-title {
+            color: white;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .advice-section {
+            background-color: white;
+            padding: 3rem 1rem;
+        }
+        
+        .advice-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .advice-category {
+            background-color: var(--light-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .advice-category.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .advice-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .advice-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .advice-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .advice-content {
+            padding: 1.5rem;
+        }
+        
+        .testimonials {
+            background-color: var(--light-color);
+            padding: 3rem 1rem;
+        }
+        
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        
+        .cta-section {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 1rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #444;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+        
+        /* Styles pour les formulaires */
+        .auth-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .auth-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .auth-form h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .auth-form .btn {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .auth-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .close-auth {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .user-menu {
+            position: relative;
+            display: none;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            width: 200px;
+            display: none;
+        }
+        
+        .user-dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--dark-color);
+            text-decoration: none;
+        }
+        
+        .user-dropdown a:hover {
+            background-color: var(--light-color);
+        }
+        
+        .user-menu.active .user-dropdown {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>AgriFarm</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#agriculteurs">Agriculteurs</a></li>
+                <li><a href="#acheteurs">Acheteurs</a></li>
+                <li><a href="#conseils">Conseils</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userAvatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-dropdown">
+                    <a href="#profile">Mon profil</a>
+                    <a href="#messages">Messages</a>
+                    <a href="#settings">Paramètres</a>
+                    <a href="#" id="logoutBtn">Déconnexion</a>
+                </div>
+            </div>
+            <a href="#" class="btn" id="authBtn">S'inscrire / Se connecter</a>
+        </nav>
+    </header>
+
+    <!-- Formulaires d'authentification -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-form" id="loginForm">
+            <span class="close-auth" id="closeAuth">&times;</span>
+            <h2>Connexion</h2>
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
+            <div class="auth-switch">
+                Pas encore inscrit? <a id="showRegister">Créer un compte</a>
+            </div>
+        </div>
+
+        <div class="auth-form" id="registerForm" style="display: none;">
+            <span class="close-auth" id="closeAuthRegister">&times;</span>
+            <h2>Inscription</h2>
+            <form id="registerFormElement">
+                <div class="form-group">
+                    <label for="registerName">Nom complet</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Téléphone</label>
+                    <input type="tel" id="registerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerType">Je suis</label>
+                    <select id="registerType" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="farmer">Agriculteur</option>
+                        <option value="buyer">Acheteur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerLocation">Région</label>
+                    <select id="registerLocation" required>
+                        <option value="">Sélectionnez votre région</option>
+                        <option value="atlantique">Atlantique</option>
+                        <option value="littoral">Littoral</option>
+                        <option value="oueme">Ouémé</option>
+                        <option value="plateau">Plateau</option>
+                        <option value="borgou">Borgou</option>
+                        <option value="donga">Donga</option>
+                        <option value="alibori">Alibori</option>
+                        <option value="atacora">Atacora</option>
+                        <option value="couffo">Couffo</option>
+                        <option value="zou">Zou</option>
+                        <option value="mono">Mono</option>
+                        <option value="collines">Collines</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Mot de passe</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmer le mot de passe</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn">S'inscrire</button>
+            </form>
+            <div class="auth-switch">
+                Déjà inscrit? <a id="showLogin">Se connecter</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <h1>Connecter les Agriculteurs et Acheteurs au Bénin</h1>
+        <p>AgriFarm révolutionne le marché agricole béninois en mettant en relation directe les producteurs locaux avec les acheteurs, tout en fournissant des conseils experts pour améliorer la production.</p>
+        <div>
+            <a href="#agriculteurs" class="btn">Je suis Agriculteur</a>
+            <a href="#acheteurs" class="btn" style="background-color: white; color: var(--primary-color); margin-left: 1rem;">Je suis Acheteur</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container" id="features">
+        <h2 class="section-title">Pourquoi choisir AgriFarm?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-handshake"></i>
+                <h3>Mise en relation directe</h3>
+                <p>Connectez-vous directement avec les agriculteurs ou acheteurs sans intermédiaires, pour de meilleurs prix et relations commerciales.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Marché transparent</h3>
+                <p>Accédez à des informations en temps réel sur les prix du marché, la demande et les tendances pour prendre des décisions éclairées.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Conseils experts</h3>
+                <p>Bénéficiez de conseils agricoles adaptés au contexte béninois pour améliorer vos rendements et la qualité de vos produits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">Comment ça marche?</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Inscription</h3>
+                <p>Créez votre compte en précisant votre profil (agriculteur ou acheteur) et vos préférences.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Profil</h3>
+                <p>Complétez votre profil avec vos produits (agriculteurs) ou vos besoins (acheteurs).</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Connection</h3>
+                <p>Utilisez notre plateforme pour entrer en contact avec des partenaires commerciaux.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Transaction</h3>
+                <p>Négociez et finalisez vos transactions en toute sécurité.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advice Section -->
+    <section class="advice-section" id="conseils">
+        <h2 class="section-title">Conseils Agricoles</h2>
+        <div class="advice-categories">
+            <div class="advice-category active">Tous</div>
+            <div class="advice-category">Techniques de culture</div>
+            <div class="advice-category">Gestion de l'eau</div>
+            <div class="advice-category">Protection des cultures</div>
+            <div class="advice-category">Marché et commercialisation</div>
+        </div>
+        <div class="advice-cards">
+            <div class="advice-card">
+                <img src="https://images.unsplash.com/photo-1592495877197-e5d1deb4d756?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Agriculture au Bénin">
+                <div class="advice-content">
+                    <h3>Optimiser la rotation des cultures</h3>
+                    <p>Découvrez comment la rotation des cultures peut améliorer votre productivité et la santé de vos sols.</p>
+                    <a href="#" class="btn" style="margin-top: 1rem;">Lire plus</a>
+                </div>
+            </div>
+            <div class="advice-card">
+                <img src="https://images.unsplash.com/photo-1570358934839-3c58c5c84c66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Irrigation">
+                <div class="advice-content">
+                    <h3>Techniques d'irrigation efficaces</h3>
+                    <p>Apprenez les méthodes d'irrigation qui conservent l'eau tout en maximisant le rendement.</p>
+                    <a href="#" class="btn" style="margin-top: 1rem;">Lire plus</a>
+                </div>
+            </div>
+            <div class="advice-card">
+                <img src="https://images.unsplash.com/photo-1595433360056-3b1d54d7cfc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Protection des cultures">
+                <div class="advice-content">
+                    <h3>Protection biologique des cultures</h3>
+                    <p>Découvrez des méthodes naturelles pour protéger vos cultures contre les parasites et maladies.</p>
+                    <a href="#" class="btn" style="margin-top: 1rem;">Lire plus</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2 class="section-title">Témoignages</h2>
+        <div class="testimonial-cards">
+            <div class="testimonial-card">
+                <p>"Grâce à AgriFarm, j'ai pu trouver des acheteurs réguliers pour mes produits à un prix équitable. Ma revenue a augmenté de 40% en six mois."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Koffi Mensah">
+                    <div>
+                        <h4>Koffi Mensah</h4>
+                        <p>Agriculteur, Zou</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p>"En tant que grossiste, AgriFarm m'a permis de trouver des producteurs locaux fiables avec des produits de qualité. La plateforme est facile à utiliser et efficace."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Aïcha Diallo">
+                    <div>
+                        <h4>Aïcha Diallo</h4>
+                        <p>Grossiste, Cotonou</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Les conseils agricoles sur AgriFarm m'ont aidé à améliorer mes techniques de culture. Mes rendements ont considérablement augmenté grâce aux méthodes partagées."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Jean Adébayo">
+                    <div>
+                        <h4>Jean Adébayo</h4>
+                        <p>Agriculteur, Borgou</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="inscription">
+        <h2>Rejoignez la communauté AgriFarm aujourd'hui</h2>
+        <p>Inscrivez-vous gratuitement et commencez à connecter avec des partenaires commerciaux et à accéder à des conseils experts.</p>
+        <a href="#" class="btn" id="ctaAuthBtn">Créer un compte</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AgriFarm</h3>
+                <p>Connecter les agriculteurs et les acheteurs au Bénin pour un marché agricole plus prospère et durable.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#agriculteurs">Pour les agriculteurs</a></li>
+                    <li><a href="#acheteurs">Pour les acheteurs</a></li>
+                    <li><a href="#conseils">Conseils agricoles</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contactez-nous</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Cotonou, Bénin</li>
+                    <li><i class="fas fa-phone"></i> +229 XX XX XX XX</li>
+                    <li><i class="fas fa-envelope"></i> info@agrifarm.bj</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 AgriFarm - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Gestion de l'authentification
+        document.addEventListener('DOMContentLoaded', function() {
+            const authBtn = document.getElementById('authBtn');
+            const ctaAuthBtn = document.getElementById('ctaAuthBtn');
+            const authContainer = document.getElementById('authContainer');
+            const closeAuth = document.getElementById('closeAuth');
+            const closeAuthRegister = document.getElementById('closeAuthRegister');
+            const showRegister = document.getElementById('showRegister');
+            const showLogin = document.getElementById('showLogin');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginFormElement = document.getElementById('loginFormElement');
+            const registerFormElement = document.getElementById('registerFormElement');
+            const userMenu = document.getElementById('userMenu');
+            const userAvatar = document.getElementById('userAvatar');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Vérifier si l'utilisateur est déjà connecté
+            checkAuthStatus();
+            
+            // Ouvrir la modale d'authentification
+            authBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                authContainer.style.display = 'flex';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            });
+            
+            ctaAuthBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                authContainer.style.display = 'flex';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            });
+            
+            // Fermer la modale
+            closeAuth.addEventListener('click', function() {
+                authContainer.style.display = 'none';
+            });
+            
+            closeAuthRegister.addEventListener('click', function() {
+                authContainer.style.display = 'none';
+            });
+            
+            // Afficher le formulaire d'inscription
+            showRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            });
+            
+            // Afficher le formulaire de connexion
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                registerForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            });
+            
+            // Soumission du formulaire de connexion
+            loginFormElement.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Ici, vous enverriez normalement ces données à votre backend
+                // Pour cette démo, on simule une connexion réussie
+                simulateLogin(email);
+            });
+            
+            // Soumission du formulaire d'inscription
+            registerFormElement.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const phone = document.getElementById('registerPhone').value;
+                const userType = document.getElementById('registerType').value;
+                const location = document.getElementById('registerLocation').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    alert("Les mots de passe ne correspondent pas!");
+                    return;
+                }
+                
+                // Ici, vous enverriez normalement ces données à votre backend
+                // Pour cette démo, on simule une inscription réussie
+                simulateRegister(name, email, phone, userType, location);
+            });
+            
+            // Menu utilisateur
+            userAvatar.addEventListener('click', function() {
+                userMenu.classList.toggle('active');
+            });
+            
+            // Déconnexion
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('agrifarm_user');
+                checkAuthStatus();
+                userMenu.classList.remove('active');
+                alert("Vous avez été déconnecté avec succès!");
+            });
+            
+            // Fermer la modale en cliquant à l'extérieur
+            authContainer.addEventListener('click', function(e) {
+                if (e.target === authContainer) {
+                    authContainer.style.display = 'none';
+                }
+            });
+            
+            // Fonction pour simuler une connexion (à remplacer par un appel API réel)
+            function simulateLogin(email) {
+                const user = {
+                    email: email,
+                    name: email.split('@')[0],
+                    isLoggedIn: true
+                };
+                
+                localStorage.setItem('agrifarm_user', JSON.stringify(user));
+                authContainer.style.display = 'none';
+                checkAuthStatus();
+                alert('Connexion réussie! (simulation)');
+            }
+            
+            // Fonction pour simuler une inscription (à remplacer par un appel API réel)
+            function simulateRegister(name, email, phone, userType, location) {
+                const user = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    type: userType,
+                    location: location,
+                    isLoggedIn: true
+                };
+                
+                localStorage.setItem('agrifarm_user', JSON.stringify(user));
+                authContainer.style.display = 'none';
+                checkAuthStatus();
+                alert('Inscription réussie! Bienvenue sur AgriFarm!');
+            }
+            
+            // Vérifier le statut d'authentification
+            function checkAuthStatus() {
+                const userData = localStorage.getItem('agrifarm_user');
+                
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    if (user.isLoggedIn) {
+                        authBtn.style.display = 'none';
+                        userMenu.style.display = 'block';
+                        document.getElementById('userAvatar').innerHTML = user.name.charAt(0).toUpperCase();
+                    }
+                } else {
+                    authBtn.style.display = 'inline-block';
+                    userMenu.style.display = 'none';
+                }
+            }
+            
+            // Gestion des catégories de conseils
+            const categories = document.querySelectorAll('.advice-category');
+            
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    // Remove active class from all categories
+                    categories.forEach(cat => cat.classList.remove('active'));
+                    
+                    // Add active class to clicked category
+                    this.classList.add('active');
+                    
+                    // Ici, vous filtreriez normalement les conseils par catégorie
+                    console.log('Selected category: ' + this.textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
